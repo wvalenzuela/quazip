@@ -1,0 +1,36 @@
+#-----------------------------------------------------------------------------
+#
+# QuaZipConfig.cmake - CMake configuration file for external projects.
+#
+# This file is configured by QuaZip and used by the UseQuaZip.cmake
+# module to load QuaZip's settings for an external project.
+@QuaZip_CONFIG_INSTALL_ONLY@
+
+SET(APP_NAME QuaZip)
+SET(APP_NAME_UP )
+STRING(TOUPPER ${APP_NAME} APP_NAME_UP)
+
+SET(${APP_NAME_UP}_LIBRARIES ${APP_NAME})
+
+# The configuration options.
+SET(${APP_NAME}_BUILD_SHARED_LIBS "@BUILD_SHARED_LIBS@")
+
+GET_FILENAME_COMPONENT(SELF_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+IF(EXISTS ${SELF_DIR}/${APP_NAME}Targets.cmake)
+	# This is an install tree
+	INCLUDE(${SELF_DIR}/${APP_NAME}Targets.cmake)
+	GET_FILENAME_COMPONENT(${APP_NAME}_INCLUDE_ROOT "${SELF_DIR}/../../../include" ABSOLUTE)
+	SET(${APP_NAME_UP}_INCLUDE_DIRS ${${APP_NAME}_INCLUDE_ROOT} ${${APP_NAME}_INCLUDE_ROOT}/${APP_NAME})  
+ELSE()
+  	IF(EXISTS ${SELF_DIR}/${APP_NAME}Exports.cmake)
+    	# This is a build tree
+    	SET(${APP_NAME_UP}_INCLUDE_DIRS "@CMAKE_SOURCE_DIR@/include")
+    	INCLUDE(${SELF_DIR}/${APP_NAME}Exports.cmake)
+  	ELSE()
+    	MESSAGE(FATAL_ERROR "OOOPS")
+  	ENDIF()
+ENDIF()
+
+# Backward compatible part:
+SET(${APP_NAME}_FOUND       TRUE)
+MESSAGE(STATUS "${APP_NAME_UP}_INCLUDE_DIRS ${${APP_NAME_UP}_INCLUDE_DIRS} ${APP_NAME_UP}_LIBRARIES ${${APP_NAME_UP}_LIBRARIES}")
