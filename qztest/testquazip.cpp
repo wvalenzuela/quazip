@@ -39,8 +39,8 @@ see quazip/(un)zip.h files for details. Basically it's the zlib license.
 
 #include <QtTest/QtTest>
 
-#include <quazip/quazip.h>
-#include <quazip/JlCompress.h>
+#include <quazip.h>
+#include <JlCompress.h>
 
 void TestQuaZip::getFileList_data()
 {

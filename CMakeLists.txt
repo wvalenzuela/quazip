@@ -23,6 +23,7 @@ PROJECT(ProjectQuaZip)
 # ======================================================================
 
 option(BUILD_WITH_QT4 "Build QuaZip with Qt4 no matter if Qt5 was found" OFF)
+option(BUILD_TEST "Include test options" OFF)
 # ======================================================================
 SET(QT_BASE_DIRECTORY " "  CACHE PATH "Qt base Directory")
 IF(NOT EXISTS ${QT_BASE_DIRECTORY})
@@ -83,5 +84,7 @@ endif(UNIX OR MINGW)
 # set(LIB_DESTINATION "${CMAKE_INSTALL_PREFIX}/lib${LIB_SUFFIX}" CACHE STRING "Library directory name" FORCE)
 
 add_subdirectory(quazip)
-
+if( BUILD_TEST )
+	add_subdirectory(qztest)
+endif()
 # install(FILES FindQuaZip.cmake RENAME FindQuaZip${QUAZIP_LIB_VERSION_SUFFIX}.cmake DESTINATION ${CMAKE_ROOT}/Modules)
